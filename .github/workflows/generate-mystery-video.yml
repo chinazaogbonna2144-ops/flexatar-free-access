@@ -1,0 +1,41 @@
+name: Generate Mystery Video
+
+on:
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+jobs:
+  render:
+    runs-on: ubuntu-latest
+    timeout-minutes: 20
+    steps:
+      - name: Check out repository
+        uses: actions/checkout@v4
+
+      - name: Set up Python
+        uses: actions/setup-python@v5
+        with:
+          python-version: "3.12"
+
+      - name: Install rendering tools
+        run: |
+          sudo apt-get update
+          sudo apt-get install -y ffmpeg fonts-dejavu-core
+          python -m pip install --upgrade pip
+          python -m pip install Pillow
+
+      - name: Render 15-second vertical MP4
+        run: |
+          cd video-generator
+          python generate_video.py
+          ffprobe -v error -show_entries format=duration -of default=noprint_wrappers=1:nokey=1 the-girl-who-heard-her-dead-mother.mp4
+
+      - name: Upload downloadable MP4
+        uses: actions/upload-artifact@v4
+        with:
+          name: the-girl-who-heard-her-dead-mother-mp4
+          path: video-generator/the-girl-who-heard-her-dead-mother.mp4
+          if-no-files-found: error
+          retention-days: 30
