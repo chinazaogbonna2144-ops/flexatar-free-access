@@ -1,0 +1,67 @@
+name: Assemble Seedance 2.5 Short Film
+
+on:
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+jobs:
+  assemble:
+    runs-on: ubuntu-latest
+    timeout-minutes: 30
+    steps:
+      - name: Check out repository
+        uses: actions/checkout@v4
+
+      - name: Install FFmpeg
+        run: |
+          sudo apt-get update
+          sudo apt-get install -y ffmpeg
+
+      - name: Download six generated clips from repository secrets
+        env:
+          CLIP_1_URL: ${{ secrets.SEEDANCE_CLIP_1_URL }}
+          CLIP_2_URL: ${{ secrets.SEEDANCE_CLIP_2_URL }}
+          CLIP_3_URL: ${{ secrets.SEEDANCE_CLIP_3_URL }}
+          CLIP_4_URL: ${{ secrets.SEEDANCE_CLIP_4_URL }}
+          CLIP_5_URL: ${{ secrets.SEEDANCE_CLIP_5_URL }}
+          CLIP_6_URL: ${{ secrets.SEEDANCE_CLIP_6_URL }}
+        run: |
+          set -euo pipefail
+          mkdir -p work
+          urls=( "${CLIP_1_URL}" "${CLIP_2_URL}" "${CLIP_3_URL}" "${CLIP_4_URL}" "${CLIP_5_URL}" "${CLIP_6_URL}" )
+          for i in "${!urls[@]}"; do
+            if [ -z "${urls[$i]}" ]; then
+              echo "Missing repository secret SEEDANCE_CLIP_$((i+1))_URL"
+              exit 1
+            fi
+            curl --fail --location --silent --show-error "${urls[$i]}" -o "work/source_$((i+1)).mp4"
+            test -s "work/source_$((i+1)).mp4"
+          done
+
+      - name: Normalize clips and assemble 60-second vertical film
+        run: |
+          set -euo pipefail
+          mkdir -p work/normalized
+          for i in 1 2 3 4 5 6; do
+            ffmpeg -hide_banner -loglevel error -y -i "work/source_${i}.mp4" \
+              -map 0:v:0 -map 0:a:0? \
+              -vf "scale=1080:1920:force_original_aspect_ratio=decrease,pad=1080:1920:(ow-iw)/2:(oh-ih)/2,setsar=1,fps=30,format=yuv420p" \
+              -c:v libx264 -preset medium -crf 20 \
+              -c:a aac -ar 48000 -ac 2 -af "apad" -t 10 \
+              "work/normalized/clip_${i}.mp4"
+          done
+          printf "file '%s'\n" "$PWD/work/normalized/clip_1.mp4" "$PWD/work/normalized/clip_2.mp4" "$PWD/work/normalized/clip_3.mp4" "$PWD/work/normalized/clip_4.mp4" "$PWD/work/normalized/clip_5.mp4" "$PWD/work/normalized/clip_6.mp4" > work/concat.txt
+          ffmpeg -hide_banner -loglevel error -y -f concat -safe 0 -i work/concat.txt \
+            -c:v libx264 -preset medium -crf 20 -c:a aac -movflags +faststart \
+            the-girl-who-heard-her-dead-mother-seedance.mp4
+          ffprobe -v error -show_entries format=duration -of default=noprint_wrappers=1:nokey=1 the-girl-who-heard-her-dead-mother-seedance.mp4
+
+      - name: Upload completed short film
+        uses: actions/upload-artifact@v4
+        with:
+          name: the-girl-who-heard-her-dead-mother-seedance-mp4
+          path: the-girl-who-heard-her-dead-mother-seedance.mp4
+          if-no-files-found: error
+          retention-days: 30
