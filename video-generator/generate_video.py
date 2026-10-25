@@ -26,15 +26,21 @@ SUB = font(18, True)
 SMALL = font(15)
 BIG = font(28, True)
 
+_BACKGROUND = None
+_VIGNETTE_MASK = None
+
 def gradient(seed):
-    im = Image.new("RGB", (W, H))
-    px = im.load()
-    for y in range(H):
-        for x in range(W):
-            glow = max(0, 1 - math.sqrt(((x-W*.53)/(W*.8))**2 + ((y-H*.34)/(H*.7))**2))
-            n = random.Random(seed + x//13 + y//17).randint(0, 4)
-            px[x,y] = (int(3+glow*8+n), int(5+glow*13+n), int(13+glow*24+n))
-    return im
+    global _BACKGROUND
+    if _BACKGROUND is None:
+        im = Image.new("RGB", (W, H))
+        px = im.load()
+        for y in range(H):
+            for x in range(W):
+                glow = max(0, 1 - math.sqrt(((x-W*.53)/(W*.8))**2 + ((y-H*.34)/(H*.7))**2))
+                n = (x // 13 + y // 17) % 5
+                px[x,y] = (int(3+glow*8+n), int(5+glow*13+n), int(13+glow*24+n))
+        _BACKGROUND = im
+    return _BACKGROUND.copy()
 
 def centered(draw, y, text, f, fill, spacing=5):
     box = draw.multiline_textbbox((0,0), text, font=f, spacing=spacing, align="center", stroke_width=0)
@@ -113,14 +119,17 @@ def draw_phone(im, t):
     d.arc((244,591,271,617), 200, 330, fill=(255,255,255,240), width=3)
 
 def vignette(im):
-    overlay=Image.new("L",(W,H),0)
-    p=overlay.load()
-    for y in range(H):
-        for x in range(W):
-            dist=math.sqrt(((x-W/2)/(W*.72))**2+((y-H/2)/(H*.72))**2)
-            p[x,y]=int(max(0,min(175,(dist-.42)*240)))
+    global _VIGNETTE_MASK
+    if _VIGNETTE_MASK is None:
+        overlay=Image.new("L",(W,H),0)
+        p=overlay.load()
+        for y in range(H):
+            for x in range(W):
+                dist=math.sqrt(((x-W/2)/(W*.72))**2+((y-H/2)/(H*.72))**2)
+                p[x,y]=int(max(0,min(175,(dist-.42)*240)))
+        _VIGNETTE_MASK = overlay.filter(ImageFilter.GaussianBlur(8))
     black=Image.new("RGB",(W,H),(0,0,0))
-    return Image.composite(black,im,overlay.filter(ImageFilter.GaussianBlur(8)))
+    return Image.composite(black,im,_VIGNETTE_MASK)
 
 def render_frame(i):
     t=i/FPS
