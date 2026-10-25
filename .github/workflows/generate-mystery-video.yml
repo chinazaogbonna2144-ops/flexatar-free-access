@@ -1,6 +1,9 @@
 name: Generate Mystery Video
 
 on:
+  push:
+    branches:
+      - video-generator
   workflow_dispatch:
 
 permissions:
