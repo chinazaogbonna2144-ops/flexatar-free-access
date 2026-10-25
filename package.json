@@ -1,0 +1,13 @@
+{
+  "name": "flexatar-free-access",
+  "version": "1.0.0",
+  "private": true,
+  "description": "Free-access Flexatar interface prototype for Cloudflare Workers",
+  "scripts": {
+    "dev": "wrangler dev",
+    "deploy": "wrangler deploy"
+  },
+  "devDependencies": {
+    "wrangler": "^4.0.0"
+  }
+}
