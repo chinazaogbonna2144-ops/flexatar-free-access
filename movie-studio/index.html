@@ -1,0 +1,103 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+<meta name="theme-color" content="#090b12">
+<title>AI Movie Studio</title>
+<style>
+:root{color-scheme:dark;--bg:#090b12;--panel:#111521;--panel2:#171d2b;--line:#293247;--text:#f5f7fb;--muted:#98a3b8;--accent:#a7f3d0;--purple:#a78bfa;--danger:#fda4af}
+*{box-sizing:border-box}body{margin:0;background:radial-gradient(ellipse at 75% -10%,#27304c 0,transparent 42%),var(--bg);color:var(--text);font:15px/1.5 Inter,ui-sans-serif,system-ui,-apple-system,sans-serif}button,input,textarea,select{font:inherit}button{cursor:pointer}.shell{max-width:1120px;margin:auto;padding:18px 16px 60px}.top{display:flex;align-items:center;justify-content:space-between;gap:12px;padding:8px 0 24px;border-bottom:1px solid var(--line)}.brand{display:flex;align-items:center;gap:10px;font-weight:800;letter-spacing:-.4px}.mark{width:36px;height:36px;border-radius:12px;background:linear-gradient(135deg,var(--accent),var(--purple));display:grid;place-items:center;color:#111827;font-weight:950}.tag{font-size:11px;color:var(--accent);border:1px solid #42695c;border-radius:99px;padding:5px 9px}.hero{padding:30px 0 20px}.eyebrow{font-size:11px;text-transform:uppercase;letter-spacing:2px;color:var(--accent);font-weight:800}.hero h1{font-size:clamp(32px,7vw,54px);line-height:1.04;letter-spacing:-2px;margin:8px 0 10px}.hero p{color:var(--muted);max-width:650px;margin:0}.layout{display:grid;grid-template-columns:minmax(0,1fr) 310px;gap:16px;align-items:start}.panel{background:linear-gradient(150deg,#151b29,#101521);border:1px solid var(--line);border-radius:18px;padding:18px;margin-bottom:15px}.panel h2{font-size:17px;margin:0 0 14px;letter-spacing:-.3px}.field{margin-bottom:13px}.field label{display:block;font-size:12px;color:#c7d0df;font-weight:700;margin-bottom:6px}.field input,.field textarea,.field select{width:100%;border:1px solid #354158;background:#0c111b;color:var(--text);border-radius:11px;padding:11px 12px;outline:none}.field textarea{min-height:100px;resize:vertical}.field input:focus,.field textarea:focus,.field select:focus{border-color:var(--accent)}.two{display:grid;grid-template-columns:1fr 1fr;gap:10px}.btn{border:0;border-radius:11px;padding:12px 15px;font-weight:800;background:var(--accent);color:#101820}.btn:disabled{opacity:.55;cursor:not-allowed}.btn.secondary{background:#222b3c;color:#e8edf7;border:1px solid #3a465c}.btn.ghost{background:transparent;color:var(--muted);border:1px solid var(--line)}.btn.full{width:100%}.note{color:var(--muted);font-size:12px}.warn{border:1px solid #735d35;background:#2b2418;color:#f8d99c;padding:11px 12px;border-radius:11px;font-size:12px;margin:12px 0}.status{display:flex;align-items:center;gap:7px;color:var(--muted);font-size:12px}.dot{width:8px;height:8px;border-radius:50%;background:#fbbf24}.dot.ok{background:#6ee7b7}.scene-list{display:grid;gap:11px}.scene{border:1px solid var(--line);background:#0e1420;border-radius:14px;padding:13px}.scene-head{display:flex;justify-content:space-between;gap:10px;align-items:center;margin-bottom:8px}.scene-title{font-weight:800}.scene small{color:var(--muted)}.scene textarea{width:100%;min-height:88px;background:#111927;border:1px solid #303c52;color:var(--text);border-radius:9px;padding:10px;resize:vertical}.scene-actions{display:flex;gap:8px;flex-wrap:wrap;margin-top:9px}.scene video{width:100%;border-radius:10px;margin-top:10px;background:#05070b}.mini{font-size:11px;color:var(--muted)}.empty{padding:28px 12px;text-align:center;border:1px dashed #39445a;border-radius:13px;color:var(--muted)}.side-sticky{position:sticky;top:12px}.pill{border:1px solid var(--line);border-radius:99px;padding:4px 8px;font-size:11px;color:var(--muted)}.hidden{display:none!important}.progress{height:5px;background:#252e40;border-radius:99px;overflow:hidden;margin-top:8px}.progress span{display:block;height:100%;width:40%;background:linear-gradient(90deg,var(--accent),var(--purple));animation:load 1.4s infinite alternate}@keyframes load{from{transform:translateX(-30%)}to{transform:translateX(150%)}}.foot{color:#657086;text-align:center;font-size:11px;padding:22px 0}.modal{position:fixed;inset:0;background:#000b;display:grid;place-items:center;padding:18px;z-index:5}.modal>div{max-width:430px;width:100%;background:#151b29;border:1px solid var(--line);padding:20px;border-radius:16px}
+@media(max-width:800px){.layout{grid-template-columns:1fr}.side-sticky{position:static}.shell{padding:12px 12px 42px}.hero{padding-top:25px}.panel{padding:15px}}@media(max-width:420px){.two{grid-template-columns:1fr}.top{align-items:flex-start}.hero h1{letter-spacing:-1.4px}}
+</style>
+</head>
+<body><main class="shell">
+<header class="top"><div class="brand"><div class="mark">M</div><span>AI Movie Studio</span></div><span class="tag">SCENE BY SCENE</span></header>
+<section class="hero"><div class="eyebrow">Your pocket film production studio</div><h1>Turn your story into<br><span style="color:var(--accent)">moving pictures.</span></h1><p>Plan a movie, write scene prompts, generate clips, and arrange your shots. Designed to work on your phone.</p></section>
+<div class="layout"><section>
+<div class="panel"><h2>01 · Start your movie</h2>
+<div class="field"><label for="title">Movie title</label><input id="title" maxlength="80" placeholder="e.g. The Last Train to Love"></div>
+<div class="field"><label for="idea">What is your movie about?</label><textarea id="idea" maxlength="1200" placeholder="Describe the story in a few sentences..."></textarea></div>
+<div class="two"><div class="field"><label for="genre">Genre</label><select id="genre"><option>Romance</option><option>Thriller</option><option>Drama</option><option>Action</option><option>Comedy</option><option>Fantasy</option><option>Horror</option></select></div><div class="field"><label for="look">Visual style</label><select id="look"><option>Photorealistic Hollywood cinema</option><option>Natural documentary realism</option><option>Stylized cinematic animation</option><option>Vintage film look</option></select></div></div>
+<div class="field"><label for="continuity">Character / continuity notes</label><textarea id="continuity" placeholder="Describe the main character's face, hair, clothes, age range, voice, and details that should stay the same."></textarea></div>
+<button class="btn full" id="makePlan">Create a 5-scene plan</button><p class="note" style="margin:9px 0 0">This creates an editable storyboard in your browser. You can change every scene prompt before generating.</p>
+</div>
+<div class="panel"><div style="display:flex;justify-content:space-between;gap:10px;align-items:center"><h2>02 · Your storyboard</h2><span class="pill" id="sceneCount">0 scenes</span></div><div id="scenes" class="scene-list"><div class="empty">Your scenes will appear here. Start by describing your movie above.</div></div></div>
+</section>
+<aside class="side-sticky">
+<div class="panel"><h2>Studio connection</h2><div class="status"><span class="dot" id="apiDot"></span><span id="apiStatus">Checking video connection…</span></div><p class="note" style="margin-top:12px">Video provider: MiniMax Hailuo 2.3 Standard through fal.ai. Your API key stays on the server.</p><div class="warn">Video generation is a paid service. Each clip can use provider credits. Review your provider pricing before generating. This app never starts a clip automatically.</div><a href="https://fal.ai/models/fal-ai/minimax/hailuo-2.3/standard/text-to-video/api" target="_blank" rel="noreferrer" style="color:var(--accent);font-size:12px">View model details and pricing ↗</a></div>
+<div class="panel"><h2>Movie checklist</h2><p class="note">✓ Story idea<br>✓ Scene-by-scene prompts<br>○ Generate each video clip<br>○ Review and download clips<br>○ Assemble clips in a video editor</p><button class="btn secondary full" id="exportPlan">Download storyboard</button><p class="mini">The storyboard and generated clip links are saved on this device.</p></div>
+<div class="panel"><h2>Useful note</h2><p class="note">For consistent actors, repeat the same detailed character description in every scene. This first version uses text-to-video; image-reference animation can be added as a later upgrade.</p></div>
+</aside></div>
+<footer class="foot">AI Movie Studio · Built for mobile browsers · Video generation requires a connected fal.ai account</footer>
+</main>
+<div class="modal hidden" id="confirmModal"><div><h2 style="margin-top:0">Generate this scene?</h2><p id="confirmText" class="note"></p><p class="warn">This sends a paid generation request to fal.ai. Charges depend on your account and the model's current pricing.</p><div style="display:flex;gap:9px"><button class="btn secondary" id="cancelGenerate" style="flex:1">Not now</button><button class="btn" id="confirmGenerate" style="flex:1">Generate clip</button></div></div></div>
+<script>
+const $=id=>document.getElementById(id);
+let scenes=JSON.parse(localStorage.getItem("movieStudioScenes")||"[]");
+let pendingScene=null;
+const beats=[
+["Opening image","Establish the world and introduce the main character. Show a memorable cinematic opening image that communicates the mood."],
+["Inciting moment","Show the event that changes the character's ordinary life and starts the central story."],
+["First turning point","Show the main character making a choice or taking a risk. Give the scene a clear visual action."],
+["Emotional low point","Show a difficult emotional moment, with expressive acting, restrained camera movement, and meaningful surroundings."],
+["Resolution","Deliver a satisfying final image that resolves the emotional journey and leaves the audience with a strong feeling."]
+];
+function save(){localStorage.setItem("movieStudioScenes",JSON.stringify(scenes));}
+function plan(){
+ const title=$("title").value.trim(),idea=$("idea").value.trim();
+ if(!title||idea.length<12){alert("Please enter a movie title and describe your story in at least 12 characters.");return;}
+ const genre=$("genre").value,look=$("look").value,continuity=$("continuity").value.trim();
+ scenes=beats.map((b,i)=>({id:Date.now()+i,title:b[0],prompt:look+". "+genre+" movie. Story: "+idea+" Character continuity: "+(continuity||"Keep the lead character's appearance consistent throughout. ")+" Scene "+(i+1)+": "+b[1]+" Cinematic composition, natural human movement, believable lighting, detailed environment, coherent action, no subtitles, no text, no logos.",duration:"6",status:"Draft",video:null,requestId:null}));
+ save();render();
+}
+function render(){
+ $("sceneCount").textContent=scenes.length+" scenes";
+ const root=$("scenes");
+ if(!scenes.length){root.innerHTML='<div class="empty">Your scenes will appear here.</div>';return;}
+ root.innerHTML="";
+ scenes.forEach((s,i)=>{
+  const card=document.createElement("article");card.className="scene";
+  const head=document.createElement("div");head.className="scene-head";
+  const name=document.createElement("div");name.innerHTML='<div class="scene-title">Scene '+(i+1)+' · '+escapeHtml(s.title)+'</div><small>'+escapeHtml(s.status)+'</small>';
+  const dur=document.createElement("span");dur.className="pill";dur.textContent=s.duration+" sec";head.append(name,dur);
+  const area=document.createElement("textarea");area.value=s.prompt;area.setAttribute("aria-label","Scene "+(i+1)+" prompt");area.onchange=()=>{s.prompt=area.value;save();};
+  const actions=document.createElement("div");actions.className="scene-actions";
+  const gen=document.createElement("button");gen.className="btn";gen.textContent=s.status==="Generating"?"Working…":"Generate scene";gen.disabled=s.status==="Generating";gen.onclick=()=>askGenerate(s.id);
+  const duration=document.createElement("select");duration.innerHTML='<option value="6">6 seconds</option><option value="10">10 seconds</option>';duration.value=s.duration;duration.onchange=()=>{s.duration=duration.value;save();render();};
+  const del=document.createElement("button");del.className="btn ghost";del.textContent="Remove";del.onclick=()=>{scenes=scenes.filter(x=>x.id!==s.id);save();render();};
+  actions.append(gen,duration,del);card.append(head,area,actions);
+  if(s.status==="Generating"){const p=document.createElement("div");p.className="progress";p.innerHTML="<span></span>";card.append(p);}
+  if(s.error){const e=document.createElement("p");e.className="mini";e.style.color="var(--danger)";e.textContent=s.error;card.append(e);}
+  if(s.video){const v=document.createElement("video");v.controls=true;v.playsInline=true;v.src=s.video;card.append(v);const a=document.createElement("a");a.href=s.video;a.download="scene-"+(i+1)+".mp4";a.textContent="Download scene video ↗";a.target="_blank";a.rel="noreferrer";a.style.color="var(--accent)";a.style.fontSize="12px";card.append(a);}
+  root.append(card);
+ });
+}
+function escapeHtml(v){return String(v).replace(/[&<>"']/g,c=>({"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;","'":"&#39;"}[c]));}
+function askGenerate(id){const s=scenes.find(x=>x.id===id);if(!s)return;pendingScene=id;$("confirmText").textContent='You are about to generate "'+s.title+'" ('+s.duration+' seconds).';$("confirmModal").classList.remove("hidden");}
+$("cancelGenerate").onclick=()=>{$("confirmModal").classList.add("hidden");pendingScene=null;};
+$("confirmGenerate").onclick=async()=>{const id=pendingScene;$("confirmModal").classList.add("hidden");pendingScene=null;await generate(id);};
+async function generate(id){
+ const s=scenes.find(x=>x.id===id);if(!s)return;
+ s.status="Generating";s.error="";save();render();
+ try{
+  const res=await fetch("/api/video",{method:"POST",headers:{"Content-Type":"application/json"},body:JSON.stringify({prompt:s.prompt,duration:s.duration})});
+  const data=await res.json();if(!res.ok)throw new Error(data.error||"Could not start video generation.");
+  s.requestId=data.request_id;save();
+  let done=false;
+  for(let n=0;n<90;n++){
+   await new Promise(r=>setTimeout(r,5000));
+   const check=await fetch("/api/video/"+encodeURIComponent(s.requestId));const result=await check.json();
+   if(!check.ok)throw new Error(result.error||"Could not check generation status.");
+   if(result.status==="COMPLETED"&&result.video_url){s.video=result.video_url;s.status="Ready";done=true;break;}
+   if(result.status==="FAILED")throw new Error(result.error||"Video generation failed.");
+   s.status=result.status==="IN_QUEUE"?"In queue":"Generating";save();
+  }
+  if(!done)throw new Error("This clip is taking longer than expected. Your request may still be running; try checking again later.");
+ }catch(e){s.status="Failed";s.error=e.message||"Something went wrong.";}
+ save();render();
+}
+$("makePlan").onclick=plan;
+$("exportPlan").onclick=()=>{const content={title:$("title").value,story:$("idea").value,genre:$("genre").value,visualStyle:$("look").value,scenes};const blob=new Blob([JSON.stringify(content,null,2)],{type:"application/json"});const a=document.createElement("a");a.href=URL.createObjectURL(blob);a.download="movie-storyboard.json";a.click();URL.revokeObjectURL(a.href);};
+async function health(){try{const r=await fetch("/api/health");const d=await r.json();$("apiDot").classList.toggle("ok",d.configured);$("apiStatus").textContent=d.configured?"Video API connected":"Video API key still needs setup";}catch{$("apiStatus").textContent="Could not check server connection";}}
+render();health();
+</script></body></html>
